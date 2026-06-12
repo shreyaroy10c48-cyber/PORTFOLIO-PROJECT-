@@ -1,0 +1,451 @@
+/* ==========================================================================
+   1. GLOBAL RESET & DESIGN VARIABLES
+   ========================================================================== */
+:root {
+    --bg-main: #f8fafc;
+    --bg-surface: #ffffff;
+    --bg-dark: #0f172a;
+    --text-primary: #0f172a;
+    --text-secondary: #334155;
+    --text-muted: #64748b;
+    --primary: #2563eb;
+    --primary-hover: #1d4ed8;
+    --accent: #38bdf8;
+    --border: #e2e8f0;
+    --radius-md: 8px;
+    --transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: var(--bg-main);
+    color: var(--text-secondary);
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    line-height: 1.6;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+/* ==========================================================================
+   2. NAVIGATION BAR & HEADER
+   ========================================================================== */
+header {
+    background-color: rgba(15, 23, 42, 0.98);
+    padding: 1.25rem 2rem;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+    width: 100%;
+}
+
+.logo {
+    color: var(--bg-surface);
+    font-size: 1.5rem;
+    font-weight: 700;
+    letter-spacing: -0.03em;
+}
+
+.logo span {
+    color: var(--accent);
+}
+
+nav ul {
+    display: flex;
+    list-style: none;
+    gap: 2.5rem;
+}
+
+nav ul li a {
+    color: #94a3b8;
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 0.95rem;
+    position: relative;
+    padding: 0.4rem 0;
+    transition: var(--transition);
+}
+
+nav ul li a:hover, 
+nav ul li a.active {
+    color: var(--accent);
+}
+
+nav ul li a::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background-color: var(--accent);
+    transition: var(--transition);
+}
+
+nav ul li a:hover::after,
+nav ul li a.active::after {
+    width: 100%;
+}
+
+/* ==========================================================================
+   3. STRUCTURAL CONTENT CONTROLLER
+   ========================================================================== */
+main {
+    flex: 1;
+    max-width: 1200px;
+    width: 100%;
+    margin: 4rem auto;
+    padding: 0 2rem;
+}
+
+/* ==========================================================================
+   4. HOME PAGE (HERO WRAPPER & TYPOGRAPHY)
+   ========================================================================== */
+.hero-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: space-between; /* Spreads layout across full width */
+    gap: 4rem;                      /* Spacing barrier between text and photo */
+    width: 100%;
+}
+
+.hero-content {
+    flex: 1.2;                      /* Allows text area to scale proportionally */
+    display: flex;
+    flex-direction: column;
+}
+
+.hero-badge {
+    display: inline-block;
+    align-self: flex-start;
+    background-color: rgba(37, 99, 235, 0.08);
+    color: var(--primary);
+    padding: 0.35rem 0.9rem;
+    border-radius: 50px;
+    font-size: 0.85rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 1.5rem;
+}
+
+.hero-content h1 {
+    font-size: 3.25rem;
+    font-weight: 800;
+    color: var(--text-primary);
+    line-height: 1.2;
+    letter-spacing: -0.04em;
+    margin-bottom: 1.5rem;
+}
+
+.hero-content p {
+    margin-bottom: 1.5rem;
+    color: var(--text-secondary);
+    font-size: 1.15rem;
+    max-width: 680px;               /* Keeps lines comfortable to read */
+}
+
+/* Interactive UI Button */
+.btn {
+    display: inline-flex;
+    align-items: center;
+    background-color: var(--primary);
+    color: var(--bg-surface);
+    padding: 0.85rem 1.75rem;
+    text-decoration: none;
+    border-radius: var(--radius-md);
+    font-weight: 600;
+    transition: var(--transition);
+    border: none;
+    cursor: pointer;
+    font-size: 1rem;
+    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.2);
+    margin-top: 0.5rem;
+    width: fit-content;
+}
+
+.btn:hover {
+    background-color: var(--primary-hover);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(37, 99, 235, 0.3);
+}
+
+/* ==========================================================================
+   5. HOME PAGE IMAGE PROCESSING
+   ========================================================================== */
+.hero-image {
+    flex: 0.8;
+    display: flex;
+    justify-content: flex-end;      /* Aligns the photo container to the right */
+    width: 100%;
+}
+
+.hero-image img {
+    width: 100%;
+    max-width: 400px;               /* Prevents photo from scaling too big */
+    height: auto;
+    max-height: 500px;
+    object-fit: cover;
+    border-radius: 16px; 
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.08), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+}
+
+/* ==========================================================================
+   6. PROJECTS PAGE (GRID SYSTEM)
+   ========================================================================== */
+.gallery-grid-engine {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    margin-top: 2rem;
+    margin-bottom: 4rem;
+}
+
+.gallery-card {
+    background: #ffffff;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+    border: 1px solid #e2e8f0;
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.gallery-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+}
+
+.gallery-image-placeholder {
+    background-color: #0284c7;
+    color: white;
+    padding: 2rem 1.5rem;
+    font-weight: 700;
+    font-size: 0.9rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    text-align: center;
+}
+
+.gallery-image-placeholder.alt {
+    background-color: #4f46e5;
+}
+
+.gallery-body {
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+
+.pill-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+.pill-tag {
+    background-color: #f1f5f9;
+    color: #475569;
+    font-size: 0.75rem;
+    font-weight: 600;
+    padding: 0.25rem 0.75rem;
+    border-radius: 50px;
+    border: 1px solid #e2e8f0;
+}
+
+.gallery-body h3 {
+    font-size: 1.25rem;
+    color: #0f172a;
+    margin-bottom: 0.75rem;
+}
+
+.gallery-body p {
+    font-size: 0.95rem;
+    color: #475569;
+}
+
+/* ==========================================================================
+   7. CONTACT PAGE LAYOUT
+   ========================================================================== */
+.contact-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: start;
+    margin: 2rem 0;
+}
+
+.contact-info h2 {
+    font-size: 2.25rem;
+    color: #0f172a;
+    font-weight: 800;
+    line-height: 1.2;
+    margin-bottom: 1.5rem;
+    letter-spacing: -0.02em;
+}
+
+.contact-info p {
+    font-size: 1.05rem;
+    color: #475569;
+    margin-bottom: 2.5rem;
+}
+
+.info-meta-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.info-item {
+    background-color: #f1f5f9;
+    padding: 1.25rem;
+    border-radius: 8px;
+    border-left: 4px solid #38bdf8;
+}
+
+.info-item strong {
+    display: block;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: #64748b;
+    margin-bottom: 0.25rem;
+}
+
+.info-item p a {
+    color: #0f172a;
+    font-weight: 600;
+    text-decoration: none;
+    font-size: 1.1rem;
+    transition: color 0.2s ease;
+}
+
+.info-item p a:hover {
+    color: #0284c7;
+}
+
+.contact-form-card {
+    background: #ffffff;
+    padding: 2.5rem;
+    border-radius: 12px;
+    border: 1px solid #e2e8f0;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+}
+
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+.form-group label {
+    display: block;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #334155;
+    margin-bottom: 0.5rem;
+}
+
+.form-group input,
+.form-group textarea {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    font-family: inherit;
+    font-size: 0.95rem;
+    color: #0f172a;
+    background-color: #f8fafc;
+    border: 1px solid #cbd5e1;
+    border-radius: 6px;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: #38bdf8;
+    box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.15);
+    background-color: #ffffff;
+}
+
+.submit-btn {
+    width: 100%;
+    padding: 0.85rem;
+    background-color: #0f172a;
+    color: #ffffff;
+    border: none;
+    border-radius: 6px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.submit-btn:hover {
+    background-color: #1e293b;
+}
+
+/* ==========================================================================
+   8. PERSISTENT FOOTER
+   ========================================================================== */
+footer {
+    background-color: var(--bg-dark);
+    color: #64748b;
+    text-align: center;
+    padding: 2rem;
+    font-size: 0.9rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    margin-top: auto;                 /* Forces footer to stick down */
+}
+
+/* ==========================================================================
+   9. MOBILE RESPONSIVE OVERRIDES
+   ========================================================================== */
+@media (max-width: 991px) {
+    .hero-wrapper {
+        flex-direction: column;      /* Stacks photo vertically on smaller devices */
+        gap: 3rem;
+        text-align: center;
+    }
+
+    .hero-content {
+        max-width: 100%;
+        align-items: center;
+    }
+
+    .hero-image {
+        justify-content: center;
+        max-width: 320px;
+        margin: 0 auto;
+    }
+
+    .contact-container {
+        grid-template-columns: 1fr;
+        gap: 3rem;
+    }
+    
+    .contact-form-card {
+        padding: 1.75rem;
+    }
+}
+
+@media (max-width: 640px) {
+    header { padding: 1rem; }
+    nav { flex-direction: column; gap: 1rem; }
+    nav ul { gap: 1.25rem; }
+    .hero-content h1 { font-size: 2.2rem; }
+}
